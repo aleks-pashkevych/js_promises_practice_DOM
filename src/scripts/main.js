@@ -1,12 +1,6 @@
 'use strict';
 
 const div = document.createElement('div');
-const divHandler = (message, result) => {
-  div.setAttribute('data-qa', 'notification');
-  div.classList.add(result);
-  div.textContent = message;
-  document.body.appendChild(div);
-};
 
 const firstPromise = new Promise((resolve, reject) => {
   const timeOut = setTimeout(() => {
@@ -39,7 +33,7 @@ const thirdPromise = new Promise((resolve, reject) => {
       rightBtn = true;
     }
 
-    if (leftBtn && rightBtn) {
+    if (leftBtn === true && rightBtn === true) {
       resolve('Third promise was resolved');
     }
   });
@@ -47,33 +41,48 @@ const thirdPromise = new Promise((resolve, reject) => {
 
 firstPromise
   .then((message) => {
-    divHandler(message, 'success');
+    div.setAttribute('data-qa', 'notification');
+    div.classList.add('success');
+    div.classList.remove('error');
+    div.textContent = message;
+    document.body.appendChild(div);
   })
   .catch((error) => {
-    divHandler(error, `error`);
-  })
-  .finally(() => {
-    removeEventListener();
+    div.setAttribute('data-qa', 'notification');
+    div.classList.add('error');
+    div.classList.remove('success');
+    div.textContent = error.message;
+    document.body.appendChild(div);
   });
 
 secondPromise
   .then((message) => {
-    divHandler(message, 'success');
+    div.setAttribute('data-qa', 'notification');
+    div.classList.add('success');
+    div.classList.remove('error');
+    div.textContent = message;
+    document.body.appendChild(div);
   })
   .catch((error) => {
-    divHandler(error, `error`);
-  })
-  .finally(() => {
-    removeEventListener();
+    div.setAttribute('data-qa', 'notification');
+    div.classList.add('error');
+    div.classList.remove('success');
+    div.textContent = error.message;
+    document.body.appendChild(div);
   });
 
 thirdPromise
   .then((message) => {
-    divHandler(message, 'success');
+    div.setAttribute('data-qa', 'notification');
+    div.classList.remove('error');
+    div.classList.add('success');
+    div.textContent = message;
+    document.body.appendChild(div);
   })
   .catch((error) => {
-    divHandler(error, `error`);
-  })
-  .finally(() => {
-    removeEventListener();
+    div.setAttribute('data-qa', 'notification');
+    div.classList.add('error');
+    div.classList.remove('success');
+    div.textContent = error.message;
+    document.body.appendChild(div);
   });
